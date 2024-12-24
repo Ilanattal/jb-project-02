@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CurrencyWatch</title>
+    <script defer src="assets/JS/app.js"></script>
+    <script defer  src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="assets/CSS/style.css">
+</head>
+<body>
+    <header>
+        <h1 style="color: #0056b3;">CurrencyWatch</h1>
+        <nav>
+            <button onclick="navigate('currencies')">Home</button> 
+            <button onclick="navigate('reports')">Rapports</button>
+            <button onclick="navigate('about')">À propos</button>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search" oninput="filterCurrencies()">
+                <button onclick="filterCurrencies()">Search</button>
+            </div>
+        </nav>
+    </header>
+    <main id="content">
+        <section id="currencies" style="background-color: #ffffff;">
+            <h2>Accueil</h2>
+            <p>Bienvenue sur Crypto Dashboard !</p>
+        </section>
+        <section id="about" style="background-color: #f9f9f9;">
+            <h2>À propos</h2>
+            <p>En savoir plus sur les cryptomonnaies.</p>
+        </section>
+        <section id="reports" style="background-color: #ffffff;">
+            <h2>Rapports</h2>
+            <p>Visualisez les performances de vos cryptomonnaies préférées.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Crypto Dashboard</p>
+    </footer>
+    
+   
+</body>
+</html>

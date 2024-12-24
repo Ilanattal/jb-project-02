@@ -1,0 +1,631 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Parallax effect for the header */
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+/* Navigation styles */
+/* Barre de navigation */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: rgba(0, 0, 0, 0.7); /* Transparence */
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 0 auto;
+    gap: 20px;
+    width: 83%;
+}
+
+nav button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+nav button:hover {
+    background: #eac641;
+}
+
+/* Conteneur de recherche dans la barre de navigation */
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-container input {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.search-container button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+    background: #eac641;
+}
+
+/* Main content with parallax sections */
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    height: 100vh;
+    padding: 50px;
+    text-align: center;
+}
+
+footer {
+    margin-top: 20px;
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Optional: Add background images for sections */
+#content {
+    background-color: #f9f9f9;
+}
+
+h2{
+    color: #0056b3;
+    text-align: center;
+}
+
+#filter-selected{
+    text-align: center;
+    flex-direction: row-reverse;
+   justify-content:left;
+   padding-left: 6%;
+}
+/* Style personnalisé pour le bouton On/Off */
+.form-check-input {
+    appearance: none;
+    width: 50px;
+    height: 25px;
+    background-color: #ccc;
+    border-radius: 25px;
+    position: relative;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-check-input:checked {
+    background-color: #2e8b57; /* Couleur verte lorsque activé */
+}
+
+.form-check-input::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 21px;
+    height: 21px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.form-check-input:checked::before {
+    transform: translateX(25px); /* Déplacement du cercle */
+}
+.currency-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.currency-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 220px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.currency-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.currency-card p {
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.currency-card button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.currency-card button:hover {
+    background: #0056b3;
+}
+
+.toggle-container {
+    margin: 10px 0;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2e8b57;
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
+}
+
+/* Conteneur de la section collapse */
+/* Conteneur de la section collapse */
+.collapse-section {
+    position: absolute; /* Position absolue par rapport à son parent */
+    top: 100%; /* S'affiche directement en dessous du bouton */
+    left: 0;
+    width: 100%;
+    margin-top: 5px; /* Un petit espace pour la séparation */
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10; /* S'assurer qu'il est au-dessus des autres éléments */
+    text-align: center; /* Centrer le contenu */
+}
+
+/* Contenu centré dans la section collapse */
+.collapse-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Espacement entre les éléments */
+}
+
+/* Transition douce pour l'affichage du toggle */
+.collapse-section {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Propriétés spécifiques au bouton et au toggle */
+.currency-card {
+    position: relative; /* Parent positionné pour que le toggle s'aligne par rapport à lui */
+}
+
+.toggle-container {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-container {
+    width: 100%;
+    background-color: #f3f3f3;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #4caf50;
+    width: 0%;
+    transition: width 0.2s ease;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2e8b57;
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
+}
+
+canvas {
+    margin: 20px auto;
+    display: block;
+    max-width: 90%;
+    height: 100%;
+}
+
+
+
+/* page a propos */
+
+/* Section globale pour l'espacement */
+.container {
+    margin-top: 30px;
+    padding: 20px;
+}
+
+/* Style de l'en-tête */
+header {
+    font-family: 'Arial', sans-serif;
+    color: #2e8b57; /* Couleur principale */
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Informations personnelles */
+section {
+    background-color: #f9f9f9; /* Couleur de fond des sections */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+section h2 {
+    color: #007b5e; /* Vert foncé */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Style pour l'image personnelle */
+img {
+    border: 5px solid #007bff; /* Couleur verte pour l'encadrement */
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Texte des informations personnelles */
+section p {
+    color: #333; /* Texte principal */
+    line-height: 1.6;
+}
+section h2{
+    color: #007bff
+}
+
+section p strong {
+    color: #007bff97; /* Texte en gras */
+}
+
+/* Style des liens et boutons */
+a.btn {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+a.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+a.btn-primary:hover {
+    background-color: #005a42;
+}
+
+a.btn-secondary {
+    background-color: #007bff;
+    color: white;
+}
+
+a.btn-secondary:hover {
+    background-color: #5c804b;
+}
+
+/* Style responsive */
+@media (max-width: 768px) {
+    img {
+        width: 120px;
+        height: 120px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    section {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    img {
+        width: 100px;
+        height: 100px;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+}
+
+
+/* Responsive Design pour Tablettes (768px et moins) */
+@media (max-width: 768px) {
+    /* Conteneur principal */
+    .container {
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    /* Alignement centré des sections */
+    section {
+        text-align: center;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    /* Image personnelle */
+    img {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+    }
+
+    /* Navigation */
+    nav {
+        flex-direction: column; /* Navigation verticale */
+        gap: 15px;
+        width: 100%; /* S'étend sur toute la largeur */
+        padding: 10px;
+    }
+
+    nav button {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    /* Cartes des devises */
+    .currency-card {
+        width: 90%; /* Réduit la taille des cartes */
+        height: 90%;
+        margin: 10px auto;
+    }
+
+    /* Boutons dans les cartes */
+    .currency-card button {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+}
+
+/* Responsive Design pour Mobiles (576px et moins) */
+@media (max-width: 576px) {
+    /* Conteneur principal */
+    .container {
+        padding: 10px;
+    }
+
+    /* Section */
+    section {
+        padding: 10px;
+        text-align: center;
+    }
+
+    /* Image personnelle */
+    img {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Navigation */
+    nav {
+        flex-direction: column; /* Navigation verticale */
+        width: 100%;
+        gap: 10px;
+    }
+
+    nav button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    /* Cartes des devises */
+    .currency-card {
+        width: 100%; /* Prend toute la largeur disponible */
+        margin: 10px auto;
+    }
+
+    /* Texte dans les cartes */
+    .currency-card h3 {
+        font-size: 1.2em;
+    }
+
+    .currency-card p {
+        font-size: 0.85em;
+    }
+
+    /* Boutons dans les cartes */
+    .currency-card button {
+        font-size: 0.8em;
+        padding: 6px 10px;
+    }
+
+    /* Barre de recherche */
+    .search-container {
+        flex-direction: column; /* Les éléments s'empilent verticalement */
+        gap: 5px;
+    }
+
+    .search-container input {
+        width: 100%; /* Occupe toute la largeur */
+    }
+
+    .search-container button {
+        width: 100%; /* Occupe toute la largeur */
+        font-size: 0.9em;
+    }
+
+    /* Collapse Content */
+    .collapse-section {
+        width: 95%; /* S'adapte à la taille de l'écran */
+        margin: 10px auto;
+    }
+
+    /* Boutons "Plus d'infos" */
+    .currency-card button {
+        font-size: 0.85rem;
+    }
+
+    /* Texte */
+    p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .text-center{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Ajustements supplémentaires pour très petits écrans (375px et moins) */
+@media (max-width: 375px) {
+    nav button {
+        font-size: 0.8rem;
+    }
+
+    .currency-card h3 {
+        font-size: 1rem;
+    }
+
+    .currency-card p {
+        font-size: 0.8em;
+    }
+
+    img {
+        width: 80px;
+        height: 80px;
+    }
+}
