@@ -1,6 +1,6 @@
-let cache = {}; // Stockage local pour les appels API
-let selectedCurrencies = []; // Monnaies sélectionnées pour les rapports
-let selectedCryptos = []; // Liste des cryptomonnaies sélectionnées
+let cache = {}; // Local storage for API calls
+let selectedCurrencies = []; // Currencies selected for reports
+let selectedCryptos = []; // List of selected cryptocurrencies
 
 document.addEventListener("DOMContentLoaded", () => {
     navigate("currencies");
@@ -35,7 +35,7 @@ function filterCurrencies() {
     });
 }
 
-// Navigation dynamique
+// Dynamic navigation
 function navigate(page) {
     const content = document.getElementById("content");
     content.innerHTML = ""; // Clear previous content
@@ -46,78 +46,77 @@ function navigate(page) {
     else if (page === "reports") renderReportsPage(content);
 }
 
-// Page d'accueil
+// Home page
 function renderHomePage(container) {
     container.innerHTML = `
-        <h2>Bienvenue sur Crypto Dashboard</h2>
-        <p>Suivez les dernières tendances des monnaies virtuelles.</p>
+        <h2>Welcome to Crypto Dashboard</h2>
+        <p>Track the latest trends in virtual currencies.</p>
     `;
 }
 
-// Page "À propos"
+// "About" page
 function renderAboutPage(container) {
     container.innerHTML = `
         <div class="container mt-5">
           
-            <!-- Section Informations Personnelles -->
+            <!-- Personal Information Section -->
             <section class="mb-5">
-                <div class="row align-items-center">
+                <div class="row-align-items-center">
                     <div class="col-md-4 text-center">
-                        <img src="english.jpeg" alt="Photo personnelle" class="img-fluid rounded-circle shadow" style="max-width: 150px;">
+                        <img src="english.jpeg" alt="Personal photo" class="img-fluid rounded-circle shadow" style="max-width: 150px;">
                     </div>
                     <div class="col-md-8">
-                        <h2>Mes informations</h2>
-                        <p><strong>Nom :</strong> [Votre nom complet]</p>
-                        <p><strong>E-mail :</strong> exemple@email.com</p>
-                        <p><strong>Téléphone :</strong> +33 6 12 34 56 78</p>
-                        <p>
-                            Je suis passionné par le développement web et j'ai choisi de développer ce projet pour explorer le potentiel des technologies modernes 
-                            comme JavaScript, les API REST, et les graphiques interactifs. Mon objectif est de proposer une application intuitive et fonctionnelle 
-                            pour suivre les devises en temps réel.
-                        </p>
+                        <h2>My Information</h2>
+                        <p><strong>Name:</strong> Ilan ATTAL</p>
+                        <p><strong>Email:</strong> i29attal.attal@gmail.com</p>
+                        <p><strong>Phone:</strong> +972 538303282</p>
                     </div>
                 </div>
                 <div class="mb-5">
-                <h2>Description du projet</h2>
+                <h2>Project Description</h2>
                 <p>
-                    Ce projet est une application front-end permettant de suivre les devises en temps réel. 
-                    Elle inclut des fonctionnalités comme la recherche de devises, l'affichage dynamique des informations, 
-                    et la gestion des rapports en temps réel via des graphiques interactifs.
+                    This project is a front-end application for tracking real-time currencies. 
+                    It includes features like currency search, dynamic information display, 
+                    and real-time report management through interactive charts.
                 </p>
                 <p>
-                    <strong>Technologies utilisées :</strong> HTML5, CSS3, JavaScript, jQuery, Bootstrap, API REST, Canvas.js.
+                    <strong>Technologies used:</strong> HTML5, CSS3, JavaScript, Bootstrap, REST API, Canvas.js.
                 </p>
             </div>
 
-            <!-- Section Navigation -->
+            <!-- Navigation Section -->
             <div class="text-center">
-                <a href="#" onclick="navigate('reports')" class="btn btn-primary">Voir le rapport en direct des cryptomonnaie selectionnées</a>
-                <a href="#" onclick="navigate('currencies')" class="btn btn-secondary">Voir la liste & les infos des 100 plus grosse cryptomonnaie</a>
+                <a href="#" onclick="navigate('reports')" class="btn btn-primary">View live report of selected cryptocurrencies</a>
+                <a href="#" onclick="navigate('currencies')" class="btn btn-secondary">See the list & details of the top 100 cryptocurrencies</a>
             </div>
             </section>
         </div>
     `;
 }
 
-const cryptoCache = {}; // Pour stocker les données en cache avec un timestamp
+const cryptoCache = {}; // Cache for storing data with a timestamp
 
 async function renderCurrenciesPage(container) {
     container.innerHTML = `
-        <h2>Liste des Cryptomonnaies</h2>
+        <h2>Cryptocurrency List</h2>
+        <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search" oninput="filterCurrencies()">
+        <button onclick="filterCurrencies()">Search</button>
+         </div>
         <div id="filter-selected" class="form-check form-switch" style="margin: 10px; display: flex; align-items: center; gap: 10px;">
         <input class="form-check-input" type="checkbox" id="filterSwitch" onchange="filterSelectedCurrencies()" style="width: 50px; height: 25px;">
         <label class="form-check-label" for="filterSwitch" style="font-weight: bold; font-size: 1.1em;">
-            Afficher uniquement les cryptomonnaies sélectionnées
+            Show only selected cryptocurrencies
         </label>
         </div>
         <div id="currenciesContainer" class="currency-list"></div>
     `;
 
-    // Charger les cryptos sélectionnées depuis localStorage
+    // Load selected cryptocurrencies from localStorage
     const savedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-    selectedCryptos = savedCryptos; // Synchroniser avec la liste globale
+    selectedCryptos = savedCryptos; // Sync with global list
 
-    // Récupérer les 100 cryptomonnaies les plus connues (par capitalisation boursière)
+    // Fetch the 100 most popular cryptocurrencies (by market cap)
     try {
         if (!cryptoCache.topCryptos) {
             const response = await fetch(
@@ -125,7 +124,7 @@ async function renderCurrenciesPage(container) {
             );
 
             if (!response.ok) {
-                throw new Error("Erreur lors de la récupération des données.");
+                throw new Error("Error retrieving data.");
             }
 
             cryptoCache.topCryptos = await response.json();
@@ -139,7 +138,7 @@ async function renderCurrenciesPage(container) {
             card.innerHTML = `
                 <h3>${coin.symbol.toUpperCase()}</h3>
                 <p>${coin.name}</p>
-                <p>Prix actuel: $${coin.current_price.toLocaleString()}</p>
+                <p>Current Price: $${coin.current_price.toLocaleString()}</p>
                 <div class="toggle-container">
                     <label class="switch">
                         <input type="checkbox" ${isSelected ? "checked" : ""} onchange="toggleCrypto('${coin.id}', '${coin.name}')">
@@ -147,16 +146,16 @@ async function renderCurrenciesPage(container) {
                     </label>
                 </div>
                 <div id="collapse-${coin.id}" class="collapse-section" style="display: none;"></div>
-                <button onclick="toggleMoreInfo('${coin.id}')">Plus d'infos</button>
+                <button onclick="toggleMoreInfo('${coin.id}')">More Info</button>
             `;
             list.appendChild(card);
         });
     } catch (error) {
-        // Afficher une alerte en cas d'erreur
+        // Show an alert in case of an error
         alert(
-            "La page n'a pas pu charger les données. Veuillez attendre quelques secondes et rafraîchir la page."
+            "The page couldn't load the data. Please wait a few seconds and refresh the page."
         );
-        console.error("Erreur lors du chargement des données de l'API :", error);
+        console.error("Error loading API data:", error);
     }
 }
 
@@ -164,36 +163,37 @@ function toggleCrypto(coinId, coinName) {
     const index = selectedCryptos.findIndex((crypto) => crypto.id === coinId);
 
     if (index === -1) {
-        // Vérifier si la limite de 5 est atteinte
+        // Check if the limit of 5 is reached
         if (selectedCryptos.length >= 5) {
             const selectedNames = selectedCryptos.map((crypto) => crypto.name).join(", ");
-            alert(`Vous ne pouvez sélectionner que 5 cryptomonnaies. Les cryptomonnaies sélectionnées sont : ${selectedNames}. Veuillez en désélectionner une pour en ajouter une nouvelle.`);
+            alert(`You can only select 5 cryptocurrencies. The selected cryptocurrencies are: ${selectedNames}. Please deselect one to add a new one.`);
 
-            // Empêcher le bouton de passer en mode ON
+            // Prevent the switch from toggling ON
             const toggleInput = document.querySelector(`input[onchange="toggleCrypto('${coinId}', '${coinName}')"]`);
             if (toggleInput) {
-                toggleInput.checked = false; // Réinitialise l'état du bouton
+                toggleInput.checked = false; // Reset the switch state
             }
             return;
         }
 
-        // Ajouter la cryptomonnaie si la limite n'est pas atteinte
+        // Add the cryptocurrency if the limit is not reached
         selectedCryptos.push({ id: coinId, name: coinName });
     } else {
-        // Supprimer la cryptomonnaie si elle est déjà sélectionnée
+        // Remove the cryptocurrency if it's already selected
         selectedCryptos.splice(index, 1);
     }
 
-    // Mettre à jour `localStorage`
+    // Update localStorage
     localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
-    console.log("Cryptos sélectionnées :", selectedCryptos);
+    console.log("Selected Cryptos:", selectedCryptos);
 }
+
 function filterSelectedCurrencies() {
     const filterSwitch = document.getElementById("filterSwitch");
     const cards = document.querySelectorAll(".currency-card");
 
     if (filterSwitch.checked) {
-        // Afficher uniquement les cryptomonnaies sélectionnées
+        // Show only selected cryptocurrencies
         cards.forEach((card) => {
             const coinId = card.querySelector("input[type='checkbox']").getAttribute("onchange").match(/'([^']+)'/)[1];
             const isSelected = selectedCryptos.some((crypto) => crypto.id === coinId);
@@ -205,7 +205,7 @@ function filterSelectedCurrencies() {
             }
         });
     } else {
-        // Réinitialiser l'affichage pour toutes les cryptomonnaies
+        // Reset display for all cryptocurrencies
         cards.forEach((card) => {
             card.style.display = "block";
         });
@@ -216,13 +216,13 @@ async function toggleMoreInfo(coinId) {
     const collapseSection = document.getElementById(`collapse-${coinId}`);
     const now = new Date().getTime();
 
-    // Si le contenu est déjà ouvert, le fermer
+    // Close the content if already open
     if (collapseSection.style.display === "block") {
         collapseSection.style.display = "none";
         return;
     }
 
-    // Barre de progression
+    // Progress bar
     collapseSection.innerHTML = `
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar-${coinId}" style="width: 0%;"></div>
@@ -230,7 +230,7 @@ async function toggleMoreInfo(coinId) {
     `;
     collapseSection.style.display = "block";
 
-    // Progression animée
+    // Animate the progress bar
     const progressBar = document.getElementById(`progress-bar-${coinId}`);
     let progress = 0;
     const interval = setInterval(() => {
@@ -243,125 +243,53 @@ async function toggleMoreInfo(coinId) {
     }, 100);
 
     try {
-        // Vérification du cache
+        // Check the cache
         if (!cryptoCache[coinId] || now - cryptoCache[coinId].timestamp > 120000) {
             const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
-            if (!response.ok) throw new Error("Erreur lors de la récupération des données");
+            if (!response.ok) throw new Error("Error fetching data");
             const data = await response.json();
 
-            // Mise à jour du cache
+            // Update the cache
             cryptoCache[coinId] = {
                 data,
                 timestamp: now,
             };
         }
 
-        // Afficher les données récupérées
+        // Display the fetched data
         const coin = cryptoCache[coinId].data;
         collapseSection.innerHTML = `
             <div class="collapse-content">
                 <img src="${coin.image.small}" alt="${coin.name}" style="width: 50px; height: 50px; margin-bottom: 10px;"/>
-                <p><strong>USD :</strong> ${coin.market_data.current_price.usd.toLocaleString()} $</p>
-                <p><strong>EUR :</strong> ${coin.market_data.current_price.eur.toLocaleString()} €</p>
-                <p><strong>ILS :</strong> ${coin.market_data.current_price.ils.toLocaleString()} ₪</p>
+                <p><strong>USD:</strong> ${coin.market_data.current_price.usd.toLocaleString()} $</p>
+                <p><strong>EUR:</strong> ${coin.market_data.current_price.eur.toLocaleString()} €</p>
+                <p><strong>ILS:</strong> ${coin.market_data.current_price.ils.toLocaleString()} ₪</p>
             </div>
         `;
     } catch (error) {
         collapseSection.innerHTML = `
             <div class="collapse-content">
-                <p>Erreur lors du chargement des données. Veuillez réessayer.</p>
+                <p>Error loading data. Please try again.</p>
             </div>
         `;
         console.error(error);
     }
 }
 
-function filterCurrencies() {
-    const input = document.getElementById("searchInput").value.toLowerCase();
-    const cards = document.querySelectorAll(".currency-card");
-
-    cards.forEach((card) => {
-        const coinName = card.querySelector("p").innerText.toLowerCase();
-        const coinSymbol = card.querySelector("h3").innerText.toLowerCase();
-        if (coinName.includes(input) || coinSymbol.includes(input)) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
-    });
-}
-
-async function showMoreInfo(coinId) {
-    if (!cache[coinId]) {
-        const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
-        cache[coinId] = await response.json();
-    }
-    const coin = cache[coinId];
-    alert(`
-        Nom: ${coin.name}
-        Symbole: ${coin.symbol.toUpperCase()}
-        Prix actuel (USD): $${coin.market_data.current_price.usd.toLocaleString()}
-        Volume total (24h): $${coin.market_data.total_volume.usd.toLocaleString()}
-        Fourniture totale: ${coin.market_data.total_supply ? coin.market_data.total_supply.toLocaleString() : "Non disponible"}
-    `);
-}
-
-function filterCurrencies() {
-    const input = document.getElementById("searchInput").value.toLowerCase();
-    const cards = document.querySelectorAll(".currency-card");
-
-    cards.forEach((card) => {
-        const coinName = card.querySelector("p").innerText.toLowerCase();
-        const coinSymbol = card.querySelector("h3").innerText.toLowerCase();
-        if (coinName.includes(input) || coinSymbol.includes(input)) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
-    });
-}
-
-// Fonction pour afficher plus d'infos sur une monnaie
-async function showMoreInfo(coinId) {
-    if (!cache[coinId]) {
-        const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
-        cache[coinId] = await response.json();
-    }
-    const coin = cache[coinId];
-    alert(`Prix en USD: $${coin.market_data.current_price.usd}`);
-}
-
-// Ajout ou suppression des monnaies dans le rapport
-function toggleReport(coinId, coinName) {
-    if (selectedCurrencies.length >= 5 && !selectedCurrencies.includes(coinId)) {
-        alert("Vous ne pouvez pas ajouter plus de 5 monnaies.");
-        return;
-    }
-
-    if (selectedCurrencies.includes(coinId)) {
-        selectedCurrencies = selectedCurrencies.filter((id) => id !== coinId);
-        alert(`${coinName} retiré du rapport.`);
-    } else {
-        selectedCurrencies.push(coinId);
-        alert(`${coinName} ajouté au rapport.`);
-    }
-}
-
-// Page des rapports
-// Page des rapports
+// Reports Page
 async function renderReportsPage(container) {
     container.innerHTML = `
-        <h2>Rapports</h2>
-        <p>Ce graphique affiche l'évolution des prix actuels (en USD) pour les cryptomonnaies sélectionnées.</p>
+        <h2>Reports</h2>
+        <p>This chart displays the real-time price evolution (in USD) of selected cryptocurrencies.</p>
         <canvas id="cryptoChart" width="800" height="600"></canvas>
     `;
 
     if (selectedCryptos.length === 0) {
-        container.innerHTML += `<p>Aucune cryptomonnaie sélectionnée.</p>`;
+        container.innerHTML += `<p>No cryptocurrency selected.</p>`;
         return;
     }
 
-    // Réinitialiser les données
+    // Reset the data
     const cryptoPricesHistory = selectedCryptos.reduce((acc, crypto) => {
         acc[crypto.id] = [];
         return acc;
@@ -371,12 +299,12 @@ async function renderReportsPage(container) {
     const chart = new Chart(ctx, {
         type: "line",
         data: {
-            labels: [], // Les labels seront les timestamps
+            labels: [],
             datasets: selectedCryptos.map((crypto) => ({
                 id: crypto.id,
                 label: crypto.name,
                 data: [],
-                borderColor: getRandomColor(), // Couleur unique pour chaque devise
+                borderColor: getRandomColor(),
                 borderWidth: 2,
                 fill: false,
             })),
@@ -386,92 +314,78 @@ async function renderReportsPage(container) {
             plugins: {
                 legend: {
                     display: true,
-                    position: 'top', // Affiche la légende au-dessus du graphique
+                    position: 'top',
                 },
             },
             scales: {
                 y: {
-                    beginAtZero: false, // Représentation des prix réels
+                    beginAtZero: false,
                     title: {
                         display: true,
-                        text: "Prix (USD)",
+                        text: "Price (USD)",
                     },
                 },
                 x: {
                     title: {
                         display: true,
-                        text: "Temps (HH:mm:ss)",
+                        text: "Time (HH:mm:ss)",
                     },
                 },
             },
         },
     });
 
-    // Fonction pour récupérer les prix en USD depuis l'API CoinGecko
     async function fetchCryptoPrices() {
         try {
             const ids = selectedCryptos.map((crypto) => crypto.id).join(',');
             const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`;
-            console.log("URL API:", url); // Vérifiez l'URL
             const response = await fetch(url);
 
             if (!response.ok) {
-                throw new Error("Erreur lors de la récupération des données depuis l'API CoinGecko");
+                throw new Error("Error fetching data from CoinGecko API");
             }
 
             const data = await response.json();
-            console.log("Données API :", data); // Vérifiez les données retournées
             return data;
         } catch (error) {
-            console.error("Erreur API :", error);
+            console.error("API Error:", error);
             return null;
         }
     }
 
-    // Fonction pour mettre à jour les données du graphique
     async function updateChartData(chart) {
         const data = await fetchCryptoPrices();
         if (!data) return;
 
-        // Ajouter les nouvelles données pour chaque cryptomonnaie
         selectedCryptos.forEach((crypto) => {
             const price = data[crypto.id]?.usd || 0;
-            console.log(`Prix ajouté pour ${crypto.id} : ${price}`);
             cryptoPricesHistory[crypto.id].push(price);
 
-            // Limiter l'historique à 20 points
             if (cryptoPricesHistory[crypto.id].length > 20) {
                 cryptoPricesHistory[crypto.id].shift();
             }
         });
 
-        // Ajouter un nouveau timestamp
         const currentTime = new Date().toLocaleTimeString();
         chart.data.labels.push(currentTime);
         if (chart.data.labels.length > 20) {
             chart.data.labels.shift();
         }
 
-        // Mettre à jour les données des datasets
         chart.data.datasets.forEach((dataset) => {
-            console.log("Mise à jour dataset:", dataset.label);
             dataset.data = cryptoPricesHistory[dataset.id];
         });
 
         chart.update();
     }
 
-    // Mise à jour initiale
     await updateChartData(chart);
-
-    // Mise à jour des données toutes les 2 secondes
     const intervalId = setInterval(() => updateChartData(chart), 2000);
 
-    // Arrêter la mise à jour lorsque l'utilisateur quitte la page
     container.addEventListener("unload", () => clearInterval(intervalId));
 }
 
-// Fonction utilitaire pour générer une couleur aléatoire
+// Utility function to generate a random color
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
